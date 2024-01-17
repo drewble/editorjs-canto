@@ -1,4 +1,4 @@
-.link-tool {
+.canto-tool {
   position: relative;
 
   &__input {
@@ -90,7 +90,7 @@
     }
   }
 
-  &__image {
+  &__src {
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -112,7 +112,7 @@
     }
   }
 
-  &__description {
+  &__caption, &__alt, &__id {
     margin: 0 0 20px 0;
     font-size: 15px;
     line-height: 1.55em;
@@ -142,7 +142,7 @@
   }
 }
 
-.codex-editor--narrow .link-tool__image {
+.codex-editor--narrow .canto-tool__image {
   display: none;
 }
 

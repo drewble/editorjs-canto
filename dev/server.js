@@ -1,16 +1,15 @@
 /**
- * Sample HTTP server for accept fetched links data
+ * Sample HTTP server for accept fetched canto data
  * [!] Use it only for debugging purposes
  *
  * How to use [requires Node.js 10.0.0+ and npm install]:
  *
  * 1. $ node dev/server.js
- * 2. set 'endpoint' at the Link Tools 'config' in example.html
- *   endpoint : 'http://localhost:8008/fetchUrl'
+ * 2. set 'endpoint' at the Canto Tools 'config' in example.html
+ *   endpoint : 'http://localhost:8008/canto_url'
  *
  */
 const http = require('http');
-const og = require('open-graph');
 
 class ServerExample {
   constructor({port, fieldName}) {
@@ -43,25 +42,9 @@ class ServerExample {
       return;
     }
 
-    const link = decodeURIComponent(url.slice('/fetchUrl?url='.length));
+    const cantoImage = decodeURIComponent(url.slice('/canto_url?content_id='.length));
 
-    /**
-     * Get available open-graph meta-tags from page
-     */
-    og(link, function(err, meta) {
-      if (meta) {
-        res.end(JSON.stringify({
-          success: 1,
-          meta
-        }));
-      } else {
-        res.end(JSON.stringify ({
-          success: 0,
-          meta: {}
-        }));
-        console.log(err);
-      }
-    });
+
   }
 
   /**
@@ -78,5 +61,5 @@ class ServerExample {
 
 new ServerExample({
   port: 8008,
-  fieldName: 'link'
+  fieldName: 'content_id'
 });

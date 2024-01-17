@@ -1,39 +1,40 @@
 /**
- * @typedef {object} LinkToolData
- * @description Link Tool's input and output data format
- * @property {string} link — data url
- * @property {metaData} meta — fetched link data
+ * @typedef {object} CantoToolData
+ * @description Canto Tool's input and output data format
+ * @property {string} contentId — canto content id
+ * @property {metaData} meta — fetched canto data
  */
 
 /**
  * @typedef {object} metaData
- * @description Fetched link meta data
- * @property {string} image - link's meta image
- * @property {string} title - link's meta title
- * @property {string} description - link's description
+ * @description Fetched canto meta data
+ * @property {string} src - image URL
+ * @property {string} title - image title
+ * @property {string} alt - image content description
+ * @property {string} caption - editorial for image
  */
 
 /**
- * @typedef {object} LinkToolConfig
- * @property {string} endpoint - the endpoint for link data fetching
+ * @typedef {object} CantoToolConfig
+ * @property {string} endpoint - the endpoint for canto data fetching
  * @property {object} headers - the headers used in the GET request
  */
 
 import './index.css';
 import 'url-polyfill';
 import ajax from '@codexteam/ajax';
-import { IconLink } from '@codexteam/icons';
+import { IconPicture } from '@codexteam/icons';
 
 /**
  * @typedef {object} UploadResponseFormat
- * @description This format expected from backend on link data fetching
+ * @description This format expected from backend on canto data fetching
  * @property {number} success  - 1 for successful uploading, 0 for failure
- * @property {metaData} meta - Object with link data.
+ * @property {metaData} meta - Object with canto data.
  *
  * Tool may have any data provided by backend, currently are supported by design:
  * title, description, image, url
  */
-export default class LinkTool {
+export default class CantoTool {
   /**
    * Notify core that read-only mode supported
    *
@@ -52,13 +53,13 @@ export default class LinkTool {
    */
   static get toolbox() {
     return {
-      icon: IconLink,
-      title: 'Link',
+      icon: IconPicture,
+      title: 'Canto',
     };
   }
 
   /**
-   * Allow to press Enter inside the LinkTool input
+   * Allow to press Enter inside the CantoTool input
    *
    * @returns {boolean}
    * @public
@@ -69,8 +70,8 @@ export default class LinkTool {
 
   /**
    * @param {object} options - Tool constructor options fot from Editor.js
-   * @param {LinkToolData} options.data - previously saved data
-   * @param {LinkToolConfig} options.config - user config for Tool
+   * @param {CantoToolData} options.data - previously saved data
+   * @param {CantoToolConfig} options.config - user config for Tool
    * @param {object} options.api - Editor.js API
    * @param {boolean} options.readOnly - read-only mode flag
    */
@@ -92,15 +93,15 @@ export default class LinkTool {
       progress: null,
       input: null,
       inputHolder: null,
-      linkContent: null,
-      linkImage: null,
-      linkTitle: null,
-      linkDescription: null,
-      linkText: null,
+      cantoContentId: null,
+      cantoSrc: null,
+      cantoTitle: null,
+      cantoAlt: null,
+      cantoCaption: null,
     };
 
     this._data = {
-      link: '',
+      contentId: '',
       meta: {},
     };
 
@@ -119,14 +120,14 @@ export default class LinkTool {
     this.nodes.container = this.make('div', this.CSS.container);
 
     this.nodes.inputHolder = this.makeInputHolder();
-    this.nodes.linkContent = this.prepareLinkPreview();
+    this.nodes.cantoContent = this.prepareCantoPreview();
 
     /**
-     * If Tool already has data, render link preview, otherwise insert input
+     * If Tool already has data, render canto preview, otherwise insert input
      */
     if (Object.keys(this.data.meta).length) {
-      this.nodes.container.appendChild(this.nodes.linkContent);
-      this.showLinkPreview(this.data.meta);
+      this.nodes.container.appendChild(this.nodes.cantoContent);
+      this.showCantoPreview(this.data.meta);
     } else {
       this.nodes.container.appendChild(this.nodes.inputHolder);
     }
@@ -141,7 +142,7 @@ export default class LinkTool {
    *
    * @public
    *
-   * @returns {LinkToolData}
+   * @returns {CantoToolData}
    */
   save() {
     return this.data;
@@ -149,24 +150,24 @@ export default class LinkTool {
 
   /**
    * Validate Block data
-   * - check if given link is an empty string or not.
+   * - check if given contentId is an empty string or not.
    *
    * @public
    *
    * @returns {boolean} false if saved data is incorrect, otherwise true
    */
   validate() {
-    return this.data.link.trim() !== '';
+    return this.data.contentId.trim() !== '';
   }
 
   /**
    * Stores all Tool's data
    *
-   * @param {LinkToolData} data - data to store
+   * @param {CantoToolData} data - data to store
    */
   set data(data) {
     this._data = Object.assign({}, {
-      link: data.link || this._data.link,
+      contentId: data.contentId || this._data.contentId,
       meta: data.meta || this._data.meta,
     });
   }
@@ -174,14 +175,14 @@ export default class LinkTool {
   /**
    * Return Tool data
    *
-   * @returns {LinkToolData}
+   * @returns {CantoToolData}
    */
   get data() {
     return this._data;
   }
 
   /**
-   * @returns {object} - Link Tool styles
+   * @returns {object} - Canto Tool styles
    */
   get CSS() {
     return {
@@ -191,19 +192,19 @@ export default class LinkTool {
       /**
        * Tool's classes
        */
-      container: 'link-tool',
-      inputEl: 'link-tool__input',
-      inputHolder: 'link-tool__input-holder',
-      inputError: 'link-tool__input-holder--error',
-      linkContent: 'link-tool__content',
-      linkContentRendered: 'link-tool__content--rendered',
-      linkImage: 'link-tool__image',
-      linkTitle: 'link-tool__title',
-      linkDescription: 'link-tool__description',
-      linkText: 'link-tool__anchor',
-      progress: 'link-tool__progress',
-      progressLoading: 'link-tool__progress--loading',
-      progressLoaded: 'link-tool__progress--loaded',
+      container: 'canto-tool',
+      inputEl: 'canto-tool__input',
+      inputHolder: 'canto-tool__input-holder',
+      inputError: 'canto-tool__input-holder--error',
+      cantoContent: 'canto-tool__content',
+      cantoContentRendered: 'canto-tool__content--rendered',
+      cantoSrc: 'canto-tool__src',
+      cantoTitle: 'canto-tool__title',
+      cantoCaption: 'canto-tool__caption',
+      cantoContentId: 'canto-tool__id',
+      progress: 'canto-tool__progress',
+      progressLoading: 'canto-tool__progress--loading',
+      progressLoaded: 'canto-tool__progress--loaded',
     };
   }
 
@@ -220,7 +221,7 @@ export default class LinkTool {
       contentEditable: !this.readOnly,
     });
 
-    this.nodes.input.dataset.placeholder = this.api.i18n.t('Link');
+    this.nodes.input.dataset.placeholder = this.api.i18n.t('Canto');
 
     if (!this.readOnly) {
       this.nodes.input.addEventListener('paste', (event) => {
@@ -240,7 +241,7 @@ export default class LinkTool {
             break;
           case A:
             if (cmdPressed) {
-              this.selectLinkUrl(event);
+              this.selectCantoId(event);
             }
             break;
         }
@@ -254,7 +255,7 @@ export default class LinkTool {
   }
 
   /**
-   * Activates link data fetching by url
+   * Activates Canto data fetching by url
    *
    * @param {PasteEvent|KeyboardEvent} event - fetching could be fired by a pase or keydown events
    */
@@ -266,11 +267,11 @@ export default class LinkTool {
     }
 
     this.removeErrorStyle();
-    this.fetchLinkData(url);
+    this.fetchCantoData(url);
   }
 
   /**
-   * If previous link data fetching failed, remove error styles
+   * If previous Canto data fetching failed, remove error styles
    */
   removeErrorStyle() {
     this.nodes.inputHolder.classList.remove(this.CSS.inputError);
@@ -278,11 +279,11 @@ export default class LinkTool {
   }
 
   /**
-   * Select LinkTool input content by CMD+A
+   * Select CantoTool input content by CMD+A
    *
    * @param {KeyboardEvent} event - keydown
    */
-  selectLinkUrl(event) {
+  selectCantoId(event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -300,55 +301,61 @@ export default class LinkTool {
   }
 
   /**
-   * Prepare link preview holder
+   * Prepare canto preview holder
    *
    * @returns {HTMLElement}
    */
-  prepareLinkPreview() {
-    const holder = this.make('a', this.CSS.linkContent, {
+  prepareCantoPreview() {
+    const holder = this.make('a', this.CSS.cantoContent, {
       target: '_blank',
       rel: 'nofollow noindex noreferrer',
     });
 
-    this.nodes.linkImage = this.make('div', this.CSS.linkImage);
-    this.nodes.linkTitle = this.make('div', this.CSS.linkTitle);
-    this.nodes.linkDescription = this.make('p', this.CSS.linkDescription);
-    this.nodes.linkText = this.make('span', this.CSS.linkText);
+    this.nodes.cantoContentId = this.make('div', this.CSS.cantoContentId);
+    this.nodes.cantoSrc = this.make('div', this.CSS.cantoSrc);
+    this.nodes.cantoTitle = this.make('div', this.CSS.cantoTitle);
+    this.nodes.cantoCaption = this.make('p', this.CSS.cantoCaption);
+    this.nodes.cantoAlt = this.make('span', this.CSS.cantoAlt);
 
     return holder;
   }
 
   /**
-   * Compose link preview from fetched data
+   * Compose Canto preview from fetched data
    *
-   * @param {metaData} meta - link meta data
+   * @param {metaData} meta - canto meta data
    */
-  showLinkPreview({ image, title, description }) {
-    this.nodes.container.appendChild(this.nodes.linkContent);
+  showCantoPreview({ src, title, caption, alt }) {
+    this.nodes.container.appendChild(this.nodes.cantoContent);
 
-    if (image && image.url) {
-      this.nodes.linkImage.style.backgroundImage = 'url(' + image.url + ')';
-      this.nodes.linkContent.appendChild(this.nodes.linkImage);
+    if (src) {
+      this.nodes.cantoSrc.style.backgroundImage = 'url(' + src + ')';
+      this.nodes.cantoContent.appendChild(this.nodes.cantoSrc);
     }
 
     if (title) {
-      this.nodes.linkTitle.textContent = title;
-      this.nodes.linkContent.appendChild(this.nodes.linkTitle);
+      this.nodes.cantoTitle.textContent = title;
+      this.nodes.cantoContent.appendChild(this.nodes.cantoTitle);
     }
 
-    if (description) {
-      this.nodes.linkDescription.textContent = description;
-      this.nodes.linkContent.appendChild(this.nodes.linkDescription);
+    if (caption) {
+      this.nodes.cantoCaption.textContent = caption;
+      this.nodes.cantoContent.appendChild(this.nodes.cantoCaption);
     }
 
-    this.nodes.linkContent.classList.add(this.CSS.linkContentRendered);
-    this.nodes.linkContent.setAttribute('href', this.data.link);
-    this.nodes.linkContent.appendChild(this.nodes.linkText);
+    if (alt) {
+      this.nodes.cantoCaption.textContent = alt;
+      this.nodes.cantoContent.appendChild(this.nodes.cantoAlt);
+    }
+
+    this.nodes.cantoContent.classList.add(this.CSS.cantoContentRendered);
+    this.nodes.cantoContent.setAttribute('href', this.data.meta.src);
+    this.nodes.cantoContent.appendChild(this.nodes.cantoContentId);
 
     try {
-      this.nodes.linkText.textContent = (new URL(this.data.link)).hostname;
+      this.nodes.cantoContentId.textContent = (new URL(this.data.contentId)).hostname;
     } catch (e) {
-      this.nodes.linkText.textContent = this.data.link;
+      this.nodes.cantoContentId.textContent = this.data.contentId;
     }
   }
 
@@ -382,48 +389,48 @@ export default class LinkTool {
   }
 
   /**
-   * Sends to backend pasted url and receives link data
+   * Sends to backend pasted url and receives canto data
    *
-   * @param {string} url - link source url
+   * @param {string} content_id - canto content ID
    */
-  async fetchLinkData(url) {
+  async fetchCantoData(content_id) {
     this.showProgress();
-    this.data = { link: url };
+    this.data = { contentId: content_id };
 
     try {
       const { body } = await (ajax.get({
         url: this.config.endpoint,
         headers: this.config.headers,
         data: {
-          url,
+          content_id,
         },
       }));
 
       this.onFetch(body);
     } catch (error) {
-      this.fetchingFailed(this.api.i18n.t('Couldn\'t fetch the link data'));
+      this.fetchingFailed(this.api.i18n.t('Couldn\'t fetch the canto data'));
     }
   }
 
   /**
-   * Link data fetching callback
+   * Canto data fetching callback
    *
    * @param {UploadResponseFormat} response - backend response
    */
   onFetch(response) {
     if (!response || !response.success) {
-      this.fetchingFailed(this.api.i18n.t('Couldn\'t get this link data, try the other one'));
+      this.fetchingFailed(this.api.i18n.t('Couldn\'t get this canto data, try the other one'));
 
       return;
     }
 
     const metaData = response.meta;
 
-    const link = response.link || this.data.link;
+    const contentId = this.data.contentId;
 
     this.data = {
       meta: metaData,
-      link,
+      contentId,
     };
 
     if (!metaData) {
@@ -434,12 +441,12 @@ export default class LinkTool {
 
     this.hideProgress().then(() => {
       this.nodes.inputHolder.remove();
-      this.showLinkPreview(metaData);
+      this.showCantoPreview(metaData);
     });
   }
 
   /**
-   * Handle link fetching errors
+   * Handle canto fetching errors
    *
    * @private
    *

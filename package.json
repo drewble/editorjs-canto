@@ -1,28 +1,28 @@
 {
-  "name": "@editorjs/link",
-  "version": "2.6.2",
+  "name": "@drewble/editorjs-canto",
+  "version": "1.0.0",
   "keywords": [
     "codex editor",
     "tool",
-    "link",
+    "canto",
     "editor.js",
     "editor"
   ],
-  "description": "Link Tool for Editor.js",
+  "description": "Canto Tool for Editor.js",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/editor-js/link.git"
+    "url": "git+https://github.com/drewble/editorjs-canto.git"
   },
   "files": [
     "dist"
   ],
-  "main": "./dist/link.umd.js",
-  "module": "./dist/link.mjs",
+  "main": "./dist/canto.umd.js",
+  "module": "./dist/canto.mjs",
   "exports": {
     ".": {
-      "import": "./dist/link.mjs",
-      "require": "./dist/link.umd.js"
+      "import": "./dist/canto.mjs",
+      "require": "./dist/canto.umd.js"
     }
   },
   "scripts": {
@@ -45,9 +45,9 @@
     "vite-plugin-css-injected-by-js": "^3.3.0"
   },
   "bugs": {
-    "url": "https://github.com/editor-js/link/issues"
+    "url": "https://github.com/drewble/editorjs-canto/issues"
   },
-  "homepage": "https://github.com/editor-js/link#readme",
+  "homepage": "https://github.com/drewble/editorjs-canto#readme",
   "dependencies": {
     "@babel/runtime": "^7.10.2",
     "@codexteam/icons": "^0.0.4"
