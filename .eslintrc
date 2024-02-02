@@ -9,5 +9,8 @@
     "HTMLElement": true,
     "KeyboardEvent": true,
     "PasteEvent": true
+  },
+  "rules": {
+    "no-new": "off"
   }
 }

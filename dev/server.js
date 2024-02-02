@@ -12,7 +12,7 @@
 const http = require('http');
 
 class ServerExample {
-  constructor({port, fieldName}) {
+  constructor({ port, fieldName }) {
     this.fieldName = fieldName;
     this.server = http.createServer((req, res) => {
       this.onRequest(req, res);
@@ -35,16 +35,25 @@ class ServerExample {
   onRequest(req, res) {
     this.allowCors(res);
 
-    const {method, url} = req;
+    const { method } = req;
 
     if (method.toLowerCase() !== 'get') {
       res.end();
+
       return;
     }
 
-    const cantoImage = decodeURIComponent(url.slice('/canto_url?content_id='.length));
+    const cantoImage = {
+      title: 'image.png',
+      alt: 'Glass sightseeing platform with people standing, or laying on the platform. Trees and cliffs below.',
+      caption: 'This photo taken on April 30, 2016 shows a glass sightseeing platform in Shilinxia scenic spot in Pinggu District of Beijing. .The sightseeing platform, which hangs 32.8 meters out from the cliff, is claimed to be the largest glass sightseeing platform in the world.',
+      src: 'https://lonelyplanet.canto.com/direct/image/btih68nubd46nd894oojsbj27a/ZVKerfSLxZAwrnzUszzS7X7OD-I/m800/800',
+    };
 
-
+    res.end(JSON.stringify({
+      success: 1,
+      meta: cantoImage,
+    }));
   }
 
   /**

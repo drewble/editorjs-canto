@@ -97,7 +97,9 @@ export default class CantoTool {
       cantoSrc: null,
       cantoTitle: null,
       cantoAlt: null,
+      cantoAltLabel: null,
       cantoCaption: null,
+      cantoCaptionLabel: null,
     };
 
     this._data = {
@@ -196,10 +198,12 @@ export default class CantoTool {
       inputEl: 'canto-tool__input',
       inputHolder: 'canto-tool__input-holder',
       inputError: 'canto-tool__input-holder--error',
+      inputLabel: 'canto-tool__label',
       cantoContent: 'canto-tool__content',
       cantoContentRendered: 'canto-tool__content--rendered',
       cantoSrc: 'canto-tool__src',
       cantoTitle: 'canto-tool__title',
+      cantoAlt: 'canto-tool__alt',
       cantoCaption: 'canto-tool__caption',
       cantoContentId: 'canto-tool__id',
       progress: 'canto-tool__progress',
@@ -306,20 +310,21 @@ export default class CantoTool {
    * @returns {HTMLElement}
    */
   prepareCantoPreview() {
-    const holder = this.make('a', this.CSS.cantoContent, {
-      target: '_blank',
-      rel: 'nofollow noindex noreferrer',
-    });
+    const holder = this.make('div', this.CSS.cantoContent);
 
     this.nodes.cantoContentId = this.make('div', this.CSS.cantoContentId);
-    this.nodes.cantoSrc = this.make('div', this.CSS.cantoSrc);
+    this.nodes.cantoSrc = this.make('img', this.CSS.cantoSrc);
     this.nodes.cantoTitle = this.make('div', this.CSS.cantoTitle);
-    this.nodes.cantoCaption = this.make('p', this.CSS.cantoCaption);
-    this.nodes.cantoAlt = this.make('span', this.CSS.cantoAlt);
+    this.nodes.cantoCaption = this.make('textarea', this.CSS.cantoCaption, {
+      rows: 5,
+    });
+    this.nodes.cantoAlt = this.make('textarea', this.CSS.cantoAlt, {
+      rows: 2,
+    });
 
     return holder;
   }
-
+ 
   /**
    * Compose Canto preview from fetched data
    *
@@ -329,34 +334,31 @@ export default class CantoTool {
     this.nodes.container.appendChild(this.nodes.cantoContent);
 
     if (src) {
-      this.nodes.cantoSrc.style.backgroundImage = 'url(' + src + ')';
+      this.nodes.cantoSrc.src = src;
       this.nodes.cantoContent.appendChild(this.nodes.cantoSrc);
     }
 
-    if (title) {
-      this.nodes.cantoTitle.textContent = title;
-      this.nodes.cantoContent.appendChild(this.nodes.cantoTitle);
+    if (alt) {
+      this.nodes.cantoAltLabel = this.make('span', this.CSS.inputLabel);
+      this.nodes.cantoAltLabel.textContent = 'Alt Text:';
+      this.nodes.cantoContent.appendChild(this.nodes.cantoAltLabel);
+
+      this.nodes.cantoAlt.textContent = alt;
+      this.nodes.cantoContent.appendChild(this.nodes.cantoAlt);
     }
 
     if (caption) {
+      this.nodes.cantoCaptionLabel = this.make('span', this.CSS.inputLabel);
+      this.nodes.cantoCaptionLabel.textContent = 'Caption:';
+      this.nodes.cantoContent.appendChild(this.nodes.cantoCaptionLabel);
+
       this.nodes.cantoCaption.textContent = caption;
       this.nodes.cantoContent.appendChild(this.nodes.cantoCaption);
-    }
-
-    if (alt) {
-      this.nodes.cantoCaption.textContent = alt;
-      this.nodes.cantoContent.appendChild(this.nodes.cantoAlt);
     }
 
     this.nodes.cantoContent.classList.add(this.CSS.cantoContentRendered);
     this.nodes.cantoContent.setAttribute('href', this.data.meta.src);
     this.nodes.cantoContent.appendChild(this.nodes.cantoContentId);
-
-    try {
-      this.nodes.cantoContentId.textContent = (new URL(this.data.contentId)).hostname;
-    } catch (e) {
-      this.nodes.cantoContentId.textContent = this.data.contentId;
-    }
   }
 
   /**
@@ -438,6 +440,8 @@ export default class CantoTool {
 
       return;
     }
+
+    console.log(metaData);
 
     this.hideProgress().then(() => {
       this.nodes.inputHolder.remove();
