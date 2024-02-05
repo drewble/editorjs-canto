@@ -2,15 +2,15 @@
 
 # Canto Tool
 
-Canto Block for the [Editor.js](https://codex.so/editor).
+Canto Block for the [Editor.js](https://codex.so/editor). Based on [@editorjs/link](https://github.com/editor-js/link).
 
 ![](assets/gif/demo.gif)
 
 ## Features
 
-Allows adding canto previews to your articles.
+Allows embedding and previewing images from the Canto DAM.
 
-**Note:** this Tool requires server-side implementation for canto data fetching. See [backend response format](#server-format) for more details.
+**Note:** this Tool requires server-side implementation for Canto data fetching. See [backend response format](#server-format) for more details.
 
 ## Installation
 
@@ -72,12 +72,11 @@ This Tool returns `data` with following format
   "data": {
     "link": "https://codex.so",
     "meta": {
-      "title": "CodeX Team",
-      "site_name": "CodeX",
-      "description": "Club of web-development, design and marketing. We build team learning how to build full-valued projects on the world market.",
-      "image": {
-        "url": "https://codex.so/public/app/img/meta_img.png"
-      }
+      "title": "GettyImages1240804.jpg",
+      "contentId": "bth1238oicnkjnds8090",
+      "alt": "A child in a helmet riding a bicycle on asphalt. The sun is shining. The asphalt is bordered by grass.",
+      "caption": "Miller park is a great place for children to enjoy the warm weather.",
+      "src": "https://cdn.io/path/to/image/GettyImages1230804.jpg"
     }
   }
 }
@@ -93,7 +92,6 @@ Backend response **should** cover following format:
 ```json5
 {
   success: 1,
-  link: "https://codex.so", // Optionally return a link to set the hyperlink URL
   meta: {
     // ... any fields you want
   },
@@ -104,30 +102,32 @@ Backend response **should** cover following format:
 
 **link** - Optional response parameter to override the URL provided
 
-**meta** — link fetched data.
+**meta** — Canto image data.
 
-Currently, the plugin's design supports the 'title', 'alt', 'image', and 'caption' fields. They should have the following format in the response:
+Currently, the plugin's design supports the 'title', 'contentId', 'alt', 'src', and 'caption' fields. They should have the following format in the response:
 
 ```json5
 {
   success: 1,
   meta: {
-    title: "CodeX Team",
-    alt: "A description of the image contents",
-    caption: "Club of web-development, design and marketing. We build team learning how to build full-valued projects on the world market.",
-    src: "https://codex.so/public/app/img/meta_img.png",
+    title: "GettyImages1240804.jpg",
+    contentId: "bth1238oicnkjnds8090",
+    alt: "A child in a helmet riding a bicycle on asphalt. The sun is shining. The asphalt is bordered by grass.",
+    caption: "Miller park is a great place for children to enjoy the warm weather.",
+    src: "https://cdn.io/path/to/image/GettyImages1230804.jpg",
   },
 }
 ```
 
-Also, it can contain any additional fields you want to store.
+## Local Development
 
-# About CodeX
+Run `node dev/server.js` to start the dev backend.
 
-<img align="right" width="120" height="120" src="https://codex.so/public/app/img/codex-logo.svg" hspace="50">
+- The response is currently hardcoded. It is possible to fetch real data from Canto using your account's access
+  token, but for preview purposes there is no material difference between a hardcoded and live response.
 
-CodeX is a team of digital specialists around the world interested in building high-quality open source products on a global market. We are [open](https://codex.so/join) for young people who want to constantly improve their skills and grow professionally with experiments in cutting-edge technologies.
+Run `yarn dev` to start frontend dev server. Start the backend _first_.
 
-| 🌐                           | Join 👋                                | Twitter                                      | Instagram                                       |
-| ---------------------------- | -------------------------------------- | -------------------------------------------- | ----------------------------------------------- |
-| [codex.so](https://codex.so) | [codex.so/join](https://codex.so/join) | [@codex_team](http://twitter.com/codex_team) | [@codex_team](http://instagram.com/codex_team/) |
+`vite` will watch your project for changes and reload.
+
+Visit [http://127.0.0.1:5173/playground](http://127.0.0.1:5173/playground) to interact with the EditorJS instance with the Canto plugin configured.
