@@ -12,6 +12,9 @@
  * @property {string} title - image title
  * @property {string} alt - image content description
  * @property {string} caption - editorial for image
+ * @property {string} credit - attribution for image
+ * @property {string} height - height of image in px
+ * @property {string} width - width of image in px
  */
 
 /**
@@ -393,18 +396,18 @@ export default class CantoTool {
   /**
    * Sends to backend pasted url and receives canto data
    *
-   * @param {string} content_id - canto content ID
+   * @param {string} contentId - canto content ID
    */
-  async fetchCantoData(content_id) {
+  async fetchCantoData(contentId) {
     this.showProgress();
-    this.data = { contentId: content_id };
+    this.data = { contentId: contentId };
 
     try {
       const { body } = await (ajax.get({
         url: this.config.endpoint,
         headers: this.config.headers,
         data: {
-          content_id,
+          contentId,
         },
       }));
 
