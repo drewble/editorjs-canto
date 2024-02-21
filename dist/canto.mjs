@@ -1086,7 +1086,7 @@ class F {
   /**
    * Sends to backend pasted url and receives canto data
    *
-   * @param {string} content_id - canto content ID
+   * @param {string} contentId - canto content ID
    */
   async fetchCantoData(w) {
     this.showProgress(), this.data = { contentId: w };
@@ -1095,7 +1095,7 @@ class F {
         url: this.config.endpoint,
         headers: this.config.headers,
         data: {
-          content_id: w
+          contentId: w
         }
       });
       this.onFetch(h);

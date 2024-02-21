@@ -70,5 +70,5 @@ class ServerExample {
 
 new ServerExample({
   port: 8008,
-  fieldName: 'content_id'
+  fieldName: 'contentId'
 });
