@@ -2,7 +2,13 @@
  * @typedef {object} CantoToolData
  * @description Canto Tool's input and output data format
  * @property {string} contentId — canto content id
- * @property {metaData} meta — fetched canto data
+ * @property {string} src - image URL
+ * @property {string} title - image title
+ * @property {string} alt - image content description
+ * @property {string} caption - editorial for image
+ * @property {string} credit - attribution for image
+ * @property {string} height - height of image in px
+ * @property {string} width - width of image in px
  */
 
 /**
@@ -107,7 +113,13 @@ export default class CantoTool {
 
     this._data = {
       contentId: '',
-      meta: {},
+      src: '',
+      title: '',
+      alt: '',
+      credit: '',
+      caption: '',
+      height: '',
+      width: '',
     };
 
     this.data = data;
@@ -130,9 +142,9 @@ export default class CantoTool {
     /**
      * If Tool already has data, render canto preview, otherwise insert input
      */
-    if (Object.keys(this.data.meta).length) {
+    if (this.data?.src?.length) {
       this.nodes.container.appendChild(this.nodes.cantoContent);
-      this.showCantoPreview(this.data.meta);
+      this.showCantoPreview(this.data);
     } else {
       this.nodes.container.appendChild(this.nodes.inputHolder);
     }
@@ -173,7 +185,13 @@ export default class CantoTool {
   set data(data) {
     this._data = Object.assign({}, {
       contentId: data.contentId || this._data.contentId,
-      meta: data.meta || this._data.meta,
+      src: data.src || this._data.src,
+      title: data.title || this._data.title,
+      alt: data.alt || this._data.alt,
+      caption: data.caption || this._data.caption,
+      credit: data.credit || this._data.credit,
+      height: data.height || this._data.height,
+      width: data.width || this._data.width
     });
   }
 
@@ -360,7 +378,7 @@ export default class CantoTool {
     }
 
     this.nodes.cantoContent.classList.add(this.CSS.cantoContentRendered);
-    this.nodes.cantoContent.setAttribute('href', this.data.meta.src);
+    this.nodes.cantoContent.setAttribute('href', this.data.src);
     this.nodes.cantoContent.appendChild(this.nodes.cantoContentId);
   }
 
@@ -429,13 +447,21 @@ export default class CantoTool {
       return;
     }
 
-    const metaData = response.meta;
+    const metaData = response.meta
+
+    const { src, title, alt, caption, credit, height, width } = metaData
 
     const contentId = this.data.contentId;
 
     this.data = {
-      meta: metaData,
       contentId,
+      src,
+      title,
+      alt,
+      caption,
+      credit,
+      height,
+      width,
     };
 
     if (!metaData) {
@@ -448,7 +474,7 @@ export default class CantoTool {
 
     this.hideProgress().then(() => {
       this.nodes.inputHolder.remove();
-      this.showCantoPreview(metaData);
+      this.showCantoPreview({src, title, caption, alt});
     });
   }
 
