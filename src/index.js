@@ -12,18 +12,6 @@
  */
 
 /**
- * @typedef {object} metaData
- * @description Fetched canto meta data
- * @property {string} src - image URL
- * @property {string} title - image title
- * @property {string} alt - image content description
- * @property {string} caption - editorial for image
- * @property {string} credit - attribution for image
- * @property {string} height - height of image in px
- * @property {string} width - width of image in px
- */
-
-/**
  * @typedef {object} CantoToolConfig
  * @property {string} endpoint - the endpoint for canto data fetching
  * @property {object} headers - the headers used in the GET request

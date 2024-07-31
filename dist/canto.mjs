@@ -1,6 +1,6 @@
 (function(){"use strict";try{if(typeof document<"u"){var o=document.createElement("style");o.appendChild(document.createTextNode(`.canto-tool{font-family:sans-serif;position:relative}.canto-tool__input{padding-left:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'%3E%3Crect width='14' height='14' x='5' y='5' stroke='currentColor' stroke-width='2' rx='4'%3E%3C/rect%3E%3Cpath stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5.13968 15.32L8.69058 11.5661C9.02934 11.2036 9.48873 11 9.96774 11C10.4467 11 10.9061 11.2036 11.2449 11.5661L15.3871 16M13.5806 14.0664L15.0132 12.533C15.3519 12.1705 15.8113 11.9668 16.2903 11.9668C16.7693 11.9668 17.2287 12.1705 17.5675 12.533L18.841 13.9634'%3E%3C/path%3E%3Cpath stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13.7778 9.33331H13.7867'%3E%3C/path%3E%3C/svg%3E");background-repeat:no-repeat;background-position:10px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.canto-tool__input-holder{position:relative}.canto-tool__input-holder--error .canto-tool__input{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'%3E%3Crect width='14' height='14' x='5' y='5' stroke='rgb(224, 147, 147)' stroke-width='2' rx='4'%3E%3C/rect%3E%3Cpath stroke='rgb(224, 147, 147)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5.13968 15.32L8.69058 11.5661C9.02934 11.2036 9.48873 11 9.96774 11C10.4467 11 10.9061 11.2036 11.2449 11.5661L15.3871 16M13.5806 14.0664L15.0132 12.533C15.3519 12.1705 15.8113 11.9668 16.2903 11.9668C16.7693 11.9668 17.2287 12.1705 17.5675 12.533L18.841 13.9634'%3E%3C/path%3E%3Cpath stroke='rgb(224, 147, 147)' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M13.7778 9.33331H13.7867'%3E%3C/path%3E%3C/svg%3E");background-color:#fff3f6;border-color:#f3e0e0;color:#a95a5a;box-shadow:inset 0 1px 3px #923e3e0d}.canto-tool__input[contentEditable=true][data-placeholder]:before{position:absolute;content:attr(data-placeholder);color:#707684;font-weight:400;opacity:0}.canto-tool__input[contentEditable=true][data-placeholder]:empty:before{opacity:1}.canto-tool__input[contentEditable=true][data-placeholder]:empty:focus:before{opacity:0}.canto-tool__progress{position:absolute;box-shadow:inset 0 1px 3px #66556b0a;height:100%;width:0;background-color:#f4f5f7;z-index:-1}.canto-tool__progress--loading{-webkit-animation:progress .5s ease-in;-webkit-animation-fill-mode:forwards}.canto-tool__progress--loaded{width:100%}.canto-tool__content{display:block;border-radius:2px;box-shadow:0 0 0 2px #fff;color:initial!important;text-decoration:none!important}.canto-tool__content:after{content:"";clear:both;display:table}.canto-tool__content--rendered{background:#fff;border:1px solid rgba(201,201,204,.48);box-shadow:0 1px 3px #0000001a;border-radius:6px;will-change:filter;animation:link-in .45s 1 cubic-bezier(.215,.61,.355,1)}.canto-tool__content--rendered:hover{box-shadow:0 0 3px #00000029}.canto-tool__src{background-position:center center;background-repeat:no-repeat;background-size:cover;margin:0 0 1.5rem;width:100%;border-radius:3px;float:right}.canto-tool__title{font-size:17px;font-weight:600;line-height:1.5em;margin:0 0 10px}.canto-tool__title+.canto-tool__anchor{margin-top:25px}.canto-tool__label{font-size:.875rem;display:block;margin:0 auto .5rem;max-width:95%;color:#111827}.canto-tool__caption,.canto-tool__alt,.canto-tool__id{margin:0 0 20px;font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;font-size:15px;line-height:1.55em;margin-bottom:1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;width:100%}.canto-tool__caption,.canto-tool__alt{margin:0 auto 2rem;max-width:95%;overflow:scroll;resize:none;border:1px solid rgba(201,201,204,.48);-webkit-box-shadow:inset 0 1px 2px 0 rgba(35,44,72,.06);-moz-box-shadow:inset 0 1px 2px 0 rgba(35,44,72,.06);box-shadow:inset 0 1px 2px #232c480f;border-radius:3px;padding:10px 12px;outline:none;width:100%;-webkit-box-sizing:border-box;box-sizing:border-box}.canto-tool__anchor{display:block;font-size:15px;line-height:1em;color:#888!important;border:0!important;padding:0!important}@keyframes link-in{0%{filter:blur(5px)}to{filter:none}}.codex-editor--narrow .canto-tool__image{display:none}@-webkit-keyframes progress{0%{width:0}to{width:85%}}`)),document.head.appendChild(o)}}catch(t){console.error("vite-plugin-css-injected-by-js",t)}})();
 var L = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
-function O(_) {
+function P(_) {
   return _ && _.__esModule && Object.prototype.hasOwnProperty.call(_, "default") ? _.default : _;
 }
 (function(_) {
@@ -95,7 +95,7 @@ function O(_) {
   }, f = function() {
     try {
       var n = _.URLSearchParams;
-      return new n("?a=1").toString() === "a=1" && typeof n.prototype.set == "function";
+      return new n("?a=1").toString() === "a=1" && typeof n.prototype.set == "function" && typeof n.prototype.entries == "function";
     } catch {
       return !1;
     }
@@ -147,10 +147,10 @@ function O(_) {
     }
   }, h = function() {
     var s = _.URL, o = function(l, n) {
-      typeof l != "string" && (l = String(l));
+      typeof l != "string" && (l = String(l)), n && typeof n != "string" && (n = String(n));
       var a = document, e;
       if (n && (_.location === void 0 || n !== _.location.href)) {
-        a = document.implementation.createHTMLDocument(""), e = a.createElement("base"), e.href = n, a.head.appendChild(e);
+        n = n.toLowerCase(), a = document.implementation.createHTMLDocument(""), e = a.createElement("base"), e.href = n, a.head.appendChild(e);
         try {
           if (e.href.indexOf(n) !== 0)
             throw new Error(e.href);
@@ -282,7 +282,7 @@ function O(_) {
 })(
   typeof L < "u" ? L : typeof window < "u" ? window : typeof self < "u" ? self : L
 );
-var P = { exports: {} };
+var O = { exports: {} };
 (function(_, g) {
   (function(h, v) {
     _.exports = v();
@@ -419,22 +419,22 @@ var P = { exports: {} };
             if (m.length === 0)
               return u([]);
             var b = m.length;
-            function w(T, C) {
+            function w(T, E) {
               try {
-                if (C && (typeof C == "object" || typeof C == "function")) {
-                  var S = C.then;
+                if (E && (typeof E == "object" || typeof E == "function")) {
+                  var S = E.then;
                   if (typeof S == "function")
-                    return void S.call(C, function(j) {
+                    return void S.call(E, function(j) {
                       w(T, j);
                     }, d);
                 }
-                m[T] = C, --b == 0 && u(m);
+                m[T] = E, --b == 0 && u(m);
               } catch (j) {
                 d(j);
               }
             }
-            for (var E = 0; E < m.length; E++)
-              w(E, m[E]);
+            for (var C = 0; C < m.length; C++)
+              w(C, m[C]);
           });
         }, n.resolve = function(r) {
           return r && typeof r == "object" && r.constructor === n ? r : new n(function(u) {
@@ -618,10 +618,10 @@ var P = { exports: {} };
               });
             } : function() {
               if (f.postMessage && !f.importScripts) {
-                var w = !0, E = f.onmessage;
+                var w = !0, C = f.onmessage;
                 return f.onmessage = function() {
                   w = !1;
-                }, f.postMessage("", "*"), f.onmessage = E, w;
+                }, f.postMessage("", "*"), f.onmessage = C, w;
               }
             }() ? (c = "setImmediate$" + Math.random() + "$", p = function(w) {
               w.source === f && typeof w.data == "string" && w.data.indexOf(c) === 0 && b(+w.data.slice(c.length));
@@ -632,18 +632,18 @@ var P = { exports: {} };
             }, n = function(w) {
               e.port2.postMessage(w);
             }) : u && "onreadystatechange" in u.createElement("script") ? (a = u.documentElement, n = function(w) {
-              var E = u.createElement("script");
-              E.onreadystatechange = function() {
-                b(w), E.onreadystatechange = null, a.removeChild(E), E = null;
-              }, a.appendChild(E);
+              var C = u.createElement("script");
+              C.onreadystatechange = function() {
+                b(w), C.onreadystatechange = null, a.removeChild(C), C = null;
+              }, a.appendChild(C);
             }) : n = function(w) {
               setTimeout(b, 0, w);
             }, d.setImmediate = function(w) {
               typeof w != "function" && (w = new Function("" + w));
-              for (var E = new Array(arguments.length - 1), T = 0; T < E.length; T++)
-                E[T] = arguments[T + 1];
-              var C = { callback: w, args: E };
-              return y[t] = C, n(t), t++;
+              for (var C = new Array(arguments.length - 1), T = 0; T < C.length; T++)
+                C[T] = arguments[T + 1];
+              var E = { callback: w, args: C };
+              return y[t] = E, n(t), t++;
             }, d.clearImmediate = m;
           }
           function m(w) {
@@ -653,29 +653,29 @@ var P = { exports: {} };
             if (r)
               setTimeout(b, 0, w);
             else {
-              var E = y[w];
-              if (E) {
+              var C = y[w];
+              if (C) {
                 r = !0;
                 try {
                   (function(T) {
-                    var C = T.callback, S = T.args;
+                    var E = T.callback, S = T.args;
                     switch (S.length) {
                       case 0:
-                        C();
+                        E();
                         break;
                       case 1:
-                        C(S[0]);
+                        E(S[0]);
                         break;
                       case 2:
-                        C(S[0], S[1]);
+                        E(S[0], S[1]);
                         break;
                       case 3:
-                        C(S[0], S[1], S[2]);
+                        E(S[0], S[1], S[2]);
                         break;
                       default:
-                        C.apply(l, S);
+                        E.apply(l, S);
                     }
-                  })(E);
+                  })(C);
                 } finally {
                   m(w), r = !1;
                 }
@@ -852,9 +852,9 @@ var P = { exports: {} };
       h.exports = o;
     }]);
   });
-})(P);
-var k = P.exports;
-const I = /* @__PURE__ */ O(k), R = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><rect width="14" height="14" x="5" y="5" stroke="currentColor" stroke-width="2" rx="4"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.13968 15.32L8.69058 11.5661C9.02934 11.2036 9.48873 11 9.96774 11C10.4467 11 10.9061 11.2036 11.2449 11.5661L15.3871 16M13.5806 14.0664L15.0132 12.533C15.3519 12.1705 15.8113 11.9668 16.2903 11.9668C16.7693 11.9668 17.2287 12.1705 17.5675 12.533L18.841 13.9634"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.7778 9.33331H13.7867"/></svg>';
+})(O);
+var k = O.exports;
+const I = /* @__PURE__ */ P(k), R = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><rect width="14" height="14" x="5" y="5" stroke="currentColor" stroke-width="2" rx="4"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.13968 15.32L8.69058 11.5661C9.02934 11.2036 9.48873 11 9.96774 11C10.4467 11 10.9061 11.2036 11.2449 11.5661L15.3871 16M13.5806 14.0664L15.0132 12.533C15.3519 12.1705 15.8113 11.9668 16.2903 11.9668C16.7693 11.9668 17.2287 12.1705 17.5675 12.533L18.841 13.9634"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.7778 9.33331H13.7867"/></svg>';
 class F {
   /**
    * Notify core that read-only mode supported
