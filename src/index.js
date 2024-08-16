@@ -339,24 +339,21 @@ export default class CantoTool {
    *
    * @param {metaData} meta - canto meta data
    */
-  showCantoPreview({ src, title, caption, alt }) {
+  showCantoPreview({ src, title, caption = '', alt = '' }) {
     this.nodes.container.appendChild(this.nodes.cantoContent);
 
     if (src) {
       this.nodes.cantoSrc.src = src;
       this.nodes.cantoContent.appendChild(this.nodes.cantoSrc);
-    }
+    
 
-    if (alt) {
       this.nodes.cantoAltLabel = this.make('span', this.CSS.inputLabel);
       this.nodes.cantoAltLabel.textContent = 'Alt Text:';
       this.nodes.cantoContent.appendChild(this.nodes.cantoAltLabel);
 
       this.nodes.cantoAlt.textContent = alt;
       this.nodes.cantoContent.appendChild(this.nodes.cantoAlt);
-    }
 
-    if (caption) {
       this.nodes.cantoCaptionLabel = this.make('span', this.CSS.inputLabel);
       this.nodes.cantoCaptionLabel.textContent = 'Caption:';
       this.nodes.cantoContent.appendChild(this.nodes.cantoCaptionLabel);
