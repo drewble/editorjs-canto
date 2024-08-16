@@ -150,7 +150,6 @@ export default class CantoTool {
    * @returns {CantoToolData}
    */
   save() {
-    console.log(this.nodes);
     return {
       ...this.data,
       alt: this.nodes.cantoAlt.textContent || this.data.alt,
