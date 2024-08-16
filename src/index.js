@@ -17,10 +17,10 @@
  * @property {object} headers - the headers used in the GET request
  */
 
-import './index.css';
-import 'url-polyfill';
-import ajax from '@codexteam/ajax';
-import { IconPicture } from '@codexteam/icons';
+import "./index.css";
+import "url-polyfill";
+import ajax from "@codexteam/ajax";
+import { IconPicture } from "@codexteam/icons";
 
 /**
  * @typedef {object} UploadResponseFormat
@@ -51,7 +51,7 @@ export default class CantoTool {
   static get toolbox() {
     return {
       icon: IconPicture,
-      title: 'Canto',
+      title: "Canto",
     };
   }
 
@@ -80,7 +80,7 @@ export default class CantoTool {
      * Tool's initial config
      */
     this.config = {
-      endpoint: config.endpoint || '',
+      endpoint: config.endpoint || "",
       headers: config.headers || {},
     };
 
@@ -100,14 +100,14 @@ export default class CantoTool {
     };
 
     this._data = {
-      contentId: '',
-      src: '',
-      title: '',
-      alt: '',
-      credit: '',
-      caption: '',
-      height: '',
-      width: '',
+      contentId: "",
+      src: "",
+      title: "",
+      alt: "",
+      credit: "",
+      caption: "",
+      height: "",
+      width: "",
     };
 
     this.data = data;
@@ -121,8 +121,8 @@ export default class CantoTool {
    * @returns {HTMLDivElement}
    */
   render() {
-    this.nodes.wrapper = this.make('div', this.CSS.baseClass);
-    this.nodes.container = this.make('div', this.CSS.container);
+    this.nodes.wrapper = this.make("div", this.CSS.baseClass);
+    this.nodes.container = this.make("div", this.CSS.container);
 
     this.nodes.inputHolder = this.makeInputHolder();
     this.nodes.cantoContent = this.prepareCantoPreview();
@@ -150,7 +150,11 @@ export default class CantoTool {
    * @returns {CantoToolData}
    */
   save() {
-    return this.data;
+    return {
+      ...this.data,
+      alt: this.nodes.cantoAlt.textContent || this.data.alt,
+      caption: this.nodes.cantoAlt.textContent || this.data.caption,
+    };
   }
 
   /**
@@ -162,7 +166,7 @@ export default class CantoTool {
    * @returns {boolean} false if saved data is incorrect, otherwise true
    */
   validate() {
-    return this.data.contentId.trim() !== '';
+    return this.data.contentId.trim() !== "";
   }
 
   /**
@@ -171,7 +175,7 @@ export default class CantoTool {
    * @param {CantoToolData} data - data to store
    */
   set data(data) {
-    this._data = Object.assign({}, {
+    this._data = {
       contentId: data.contentId || this._data.contentId,
       src: data.src || this._data.src,
       title: data.title || this._data.title,
@@ -179,8 +183,8 @@ export default class CantoTool {
       caption: data.caption || this._data.caption,
       credit: data.credit || this._data.credit,
       height: data.height || this._data.height,
-      width: data.width || this._data.width
-    });
+      width: data.width || this._data.width,
+    };
   }
 
   /**
@@ -203,21 +207,21 @@ export default class CantoTool {
       /**
        * Tool's classes
        */
-      container: 'canto-tool',
-      inputEl: 'canto-tool__input',
-      inputHolder: 'canto-tool__input-holder',
-      inputError: 'canto-tool__input-holder--error',
-      inputLabel: 'canto-tool__label',
-      cantoContent: 'canto-tool__content',
-      cantoContentRendered: 'canto-tool__content--rendered',
-      cantoSrc: 'canto-tool__src',
-      cantoTitle: 'canto-tool__title',
-      cantoAlt: 'canto-tool__alt',
-      cantoCaption: 'canto-tool__caption',
-      cantoContentId: 'canto-tool__id',
-      progress: 'canto-tool__progress',
-      progressLoading: 'canto-tool__progress--loading',
-      progressLoaded: 'canto-tool__progress--loaded',
+      container: "canto-tool",
+      inputEl: "canto-tool__input",
+      inputHolder: "canto-tool__input-holder",
+      inputError: "canto-tool__input-holder--error",
+      inputLabel: "canto-tool__label",
+      cantoContent: "canto-tool__content",
+      cantoContentRendered: "canto-tool__content--rendered",
+      cantoSrc: "canto-tool__src",
+      cantoTitle: "canto-tool__title",
+      cantoAlt: "canto-tool__alt",
+      cantoCaption: "canto-tool__caption",
+      cantoContentId: "canto-tool__id",
+      progress: "canto-tool__progress",
+      progressLoading: "canto-tool__progress--loading",
+      progressLoaded: "canto-tool__progress--loaded",
     };
   }
 
@@ -227,21 +231,21 @@ export default class CantoTool {
    * @returns {HTMLElement}
    */
   makeInputHolder() {
-    const inputHolder = this.make('div', this.CSS.inputHolder);
+    const inputHolder = this.make("div", this.CSS.inputHolder);
 
-    this.nodes.progress = this.make('label', this.CSS.progress);
-    this.nodes.input = this.make('div', [this.CSS.input, this.CSS.inputEl], {
+    this.nodes.progress = this.make("label", this.CSS.progress);
+    this.nodes.input = this.make("div", [this.CSS.input, this.CSS.inputEl], {
       contentEditable: !this.readOnly,
     });
 
-    this.nodes.input.dataset.placeholder = this.api.i18n.t('Canto');
+    this.nodes.input.dataset.placeholder = this.api.i18n.t("Canto");
 
     if (!this.readOnly) {
-      this.nodes.input.addEventListener('paste', (event) => {
+      this.nodes.input.addEventListener("paste", (event) => {
         this.startFetching(event);
       });
 
-      this.nodes.input.addEventListener('keydown', (event) => {
+      this.nodes.input.addEventListener("keydown", (event) => {
         const [ENTER, A] = [13, 65];
         const cmdPressed = event.ctrlKey || event.metaKey;
 
@@ -275,8 +279,8 @@ export default class CantoTool {
   startFetching(event) {
     let url = this.nodes.input.textContent;
 
-    if (event.type === 'paste') {
-      url = (event.clipboardData || window.clipboardData).getData('text');
+    if (event.type === "paste") {
+      url = (event.clipboardData || window.clipboardData).getData("text");
     }
 
     this.removeErrorStyle();
@@ -319,54 +323,57 @@ export default class CantoTool {
    * @returns {HTMLElement}
    */
   prepareCantoPreview() {
-    const holder = this.make('div', this.CSS.cantoContent);
+    const holder = this.make("div", this.CSS.cantoContent);
 
-    this.nodes.cantoContentId = this.make('div', this.CSS.cantoContentId);
-    this.nodes.cantoSrc = this.make('img', this.CSS.cantoSrc);
-    this.nodes.cantoTitle = this.make('div', this.CSS.cantoTitle);
-    this.nodes.cantoCaption = this.make('textarea', this.CSS.cantoCaption, {
+    this.nodes.cantoContentId = this.make("div", this.CSS.cantoContentId);
+    this.nodes.cantoSrc = this.make("img", this.CSS.cantoSrc);
+    this.nodes.cantoTitle = this.make("div", this.CSS.cantoTitle);
+    this.nodes.cantoCaption = this.make("textarea", this.CSS.cantoCaption, {
       rows: 5,
     });
-    this.nodes.cantoAlt = this.make('textarea', this.CSS.cantoAlt, {
+    this.nodes.cantoAlt = this.make("textarea", this.CSS.cantoAlt, {
       rows: 2,
     });
 
     return holder;
   }
- 
+
   /**
    * Compose Canto preview from fetched data
    *
    * @param {metaData} meta - canto meta data
    */
-  showCantoPreview({ src, title, caption, alt }) {
+  showCantoPreview({ src, title, caption = "", alt = "" }) {
     this.nodes.container.appendChild(this.nodes.cantoContent);
 
     if (src) {
       this.nodes.cantoSrc.src = src;
       this.nodes.cantoContent.appendChild(this.nodes.cantoSrc);
-    }
 
-    if (alt) {
-      this.nodes.cantoAltLabel = this.make('span', this.CSS.inputLabel);
-      this.nodes.cantoAltLabel.textContent = 'Alt Text:';
+      this.nodes.cantoAltLabel = this.make("span", this.CSS.inputLabel);
+      this.nodes.cantoAltLabel.textContent = "Alt Text:";
       this.nodes.cantoContent.appendChild(this.nodes.cantoAltLabel);
 
       this.nodes.cantoAlt.textContent = alt;
-      this.nodes.cantoContent.appendChild(this.nodes.cantoAlt);
-    }
+      this.nodes.cantoAlt.addEventListener("change", (event) => {
+        this.nodes.cantoAlt.textContent = event.target.value;
+      });
 
-    if (caption) {
-      this.nodes.cantoCaptionLabel = this.make('span', this.CSS.inputLabel);
-      this.nodes.cantoCaptionLabel.textContent = 'Caption:';
+      this.nodes.cantoContent.appendChild(this.nodes.cantoAlt);
+
+      this.nodes.cantoCaptionLabel = this.make("span", this.CSS.inputLabel);
+      this.nodes.cantoCaptionLabel.textContent = "Caption:";
       this.nodes.cantoContent.appendChild(this.nodes.cantoCaptionLabel);
 
       this.nodes.cantoCaption.textContent = caption;
       this.nodes.cantoContent.appendChild(this.nodes.cantoCaption);
+      this.nodes.cantoCaption.addEventListener("change", (event) => {
+        this.nodes.cantoCaption.textContent = event.target.value;
+      });
     }
 
     this.nodes.cantoContent.classList.add(this.CSS.cantoContentRendered);
-    this.nodes.cantoContent.setAttribute('href', this.data.src);
+    this.nodes.cantoContent.setAttribute("href", this.data.src);
     this.nodes.cantoContent.appendChild(this.nodes.cantoContentId);
   }
 
@@ -406,20 +413,20 @@ export default class CantoTool {
    */
   async fetchCantoData(contentId) {
     this.showProgress();
-    this.data = { contentId: contentId };
+    this.data = { contentId };
 
     try {
-      const { body } = await (ajax.get({
+      const { body } = await ajax.get({
         url: this.config.endpoint,
         headers: this.config.headers,
         data: {
           contentId,
         },
-      }));
+      });
 
       this.onFetch(body);
     } catch (error) {
-      this.fetchingFailed(this.api.i18n.t('Couldn\'t fetch the canto data'));
+      this.fetchingFailed(this.api.i18n.t("Couldn't fetch the canto data"));
     }
   }
 
@@ -430,16 +437,18 @@ export default class CantoTool {
    */
   onFetch(response) {
     if (!response || !response.success) {
-      this.fetchingFailed(this.api.i18n.t('Couldn\'t get this canto data, try the other one'));
+      this.fetchingFailed(
+        this.api.i18n.t("Couldn't get this canto data, try the other one")
+      );
 
       return;
     }
 
-    const metaData = response.meta
+    const metaData = response.meta;
 
-    const { src, title, alt, caption, credit, height, width } = metaData
+    const { src, title, alt, caption, credit, height, width } = metaData;
 
-    const contentId = this.data.contentId;
+    const { contentId } = this.data;
 
     this.data = {
       contentId,
@@ -453,7 +462,9 @@ export default class CantoTool {
     };
 
     if (!metaData) {
-      this.fetchingFailed(this.api.i18n.t('Wrong response format from the server'));
+      this.fetchingFailed(
+        this.api.i18n.t("Wrong response format from the server")
+      );
 
       return;
     }
@@ -462,7 +473,7 @@ export default class CantoTool {
 
     this.hideProgress().then(() => {
       this.nodes.inputHolder.remove();
-      this.showCantoPreview({src, title, caption, alt});
+      this.showCantoPreview({ src, title, caption, alt });
     });
   }
 
@@ -476,7 +487,7 @@ export default class CantoTool {
   fetchingFailed(errorMessage) {
     this.api.notifier.show({
       message: errorMessage,
-      style: 'error',
+      style: "error",
     });
 
     this.applyErrorStyle();
